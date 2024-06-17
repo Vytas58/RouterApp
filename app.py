@@ -13,7 +13,7 @@ db_connection = None
 db_cursor = None
 entry_version = None
 
-# Function to authenticate router
+# Rauterio prisijungimo funkcija
 def authenticate_router():
     global router_ip, router_username, router_password, ssh
 
@@ -36,7 +36,7 @@ def authenticate_router():
     except Exception as e:
         messagebox.showerror("Error", f"Authentication failed: {str(e)}")
 
-# Function to fetch and display router data
+# Duomenų ištraukimas ir atvaizdavimas
 def fetch_router_data():
     try:
         output = ssh.send_command("/interface ethernet print")
@@ -77,7 +77,7 @@ def fetch_additional_data():
     except Exception as e:
         messagebox.showerror("Error", f"Failed to fetch additional data: {str(e)}")
 
-# Function to configure chosen port
+# Portu konfiguravimas
 def configure_port():
     try:
         port = entry_port.get()
@@ -102,7 +102,7 @@ def configure_port():
     except Exception as e:
         messagebox.showerror("Error", f"Failed to configure port: {str(e)}")
 
-# Function to save version of router data to database
+# Routerio versijos duomenų išsaugojimas
 def save_version(router_data):
     try:
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -142,7 +142,7 @@ def load_selected_version():
     except Exception as e:
         messagebox.showerror("Error", f"Failed to load selected version: {str(e)}")
 
-# Pakonfiguruotus duomenis issaugo
+# Konfiguruotų duomenų issaugojimas
 def save_current_version():
     try:
         current_data = text_router_data.get(1.0, tk.END)
@@ -155,15 +155,15 @@ def main():
     global text_router_data, text_additional_data, entry_port, text_versions, entry_version
     global entry_name, entry_mtu, entry_mac, entry_arp
 
-    # Create main window
+    # Meniu langokūrimas
     root = tk.Tk()
     root.title("Router Management Tool")
 
-    # Create tab control
+    # Valdymo irankių kūrimas
     tab_control = ttk.Notebook(root)
     tab_control.pack(expand=1, fill='both')
 
-    # Tab 1: Router Data
+    # Tab 1: Routerio duomenys
     tab1 = ttk.Frame(tab_control)
     tab_control.add(tab1, text='Router Data')
 
@@ -180,7 +180,7 @@ def main():
     button_save_version = ttk.Button(tab1, text="Save Version", command=save_current_version)
     button_save_version.pack(pady=10)
 
-    # Tab 2: Additional Data
+    # Tab 2: Papildomi duomenys
     tab2 = ttk.Frame(tab_control)
     tab_control.add(tab2, text='Additional Data')
 
@@ -194,7 +194,7 @@ def main():
     button_fetch_additional_data = ttk.Button(tab2, text="Fetch Additional Data", command=fetch_additional_data)
     button_fetch_additional_data.pack(pady=10)
 
-    # Tab 3: Configure Port
+    # Tab 3: Porto konfiguravimas
     tab3 = ttk.Frame(tab_control)
     tab_control.add(tab3, text='Configure Port')
 
@@ -227,7 +227,7 @@ def main():
     button_configure_port = ttk.Button(tab3, text="Configure Port", command=configure_port)
     button_configure_port.grid(row=5, column=0, columnspan=2, pady=10)
 
-    # Tab 4: Router Versions
+    # Tab 4: Routerio verdija
     tab4 = ttk.Frame(tab_control)
     tab_control.add(tab4, text='Router Versions')
 
@@ -266,7 +266,7 @@ def main():
 
 # Pati pradzia, autentifikacija
 if __name__ == "__main__":
-    # Create authentication window
+    # Prisijungimo nlangas
     auth_window = tk.Tk()
     auth_window.title("Router Authentication")
 
